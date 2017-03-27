@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>LitBlog - Главная</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"/>
+  </head>
+  <body>
+    {% for post in posts %}
+    <a href="">{{post.title}} </a>
+    <article>
+      {{post.post_text}}
+    </article>
+    {% endfor %}
+  </body>
+</html>
