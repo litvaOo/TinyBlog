@@ -13,5 +13,9 @@ session = DBSession()
 def index_page():
     return render_template("index.html", posts=session.query(Posts).all())
 
+@app.route('/posts/<int:post_id>')
+def posts_page(post_id):
+    return render_template("post.html", post=session.query(Posts).filter(Posts.id == post_id).first())
+
 if ( __name__ == "__main__"):
-    app.run();
+    app.run(debug=True);
