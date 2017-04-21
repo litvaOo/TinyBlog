@@ -1,0 +1,47 @@
+import sys
+import json
+from modules import config
+from datetime import datetime
+from sqlalchemy import Column, ForeignKey, Integer, String, Text, Boolean
+from sqlalchemy.dialects.postgresql import TIMESTAMP
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from sqlalchemy import create_engine
+Base = declarative_base()
+
+class Posts(Base):
+    __tablename__ = 'posts'
+    title = Column(
+    String(150), nullable=False)
+    id = Column(
+    Integer, primary_key=True)
+    post_text = Column(
+    Text, nullable=False)
+    likes_number = Column(
+    Integer, nullable=False)
+    post_date = Column(
+    TIMESTAMP, nullable=False)
+
+    def __init__(self, title, post_text, likes_number = 0):
+        self.title = title
+        self.post_text = post_text
+        self.likes_number = likes_number
+        self.post_date = datetime.now()
+
+class Users(Base):
+    __tablename__ = 'users'
+    name = Column(
+    String(32), nullable=False)
+    id = Column(
+    Integer, primary_key=True)
+    login = Column(
+    String(32), nullable=False)
+    password = Column(
+    String(64), nullable=False)
+    isadmin = Column(
+    Boolean, nullable=False)
+
+
+engine = create_engine (config.Config.buildConnectionString())
+
+Base.metadata.create_all(engine)

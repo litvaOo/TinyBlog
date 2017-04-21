@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>LitBlog - Главная</title>
-    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css"/>
-  </head>
-  <body>
-    {% for post in posts %}
-    <a href="/posts/{{post.id}}">{{post.title}} </a>
-    <article>
-      {{post.post_text[0:150]}}
-    </article>
-    {% endfor %}
-  </body>
-</html>
+{% extends "layout_template.html" %}
+{% block title %} Главная {% endblock %}
+{% block body %}
+  {% for post in posts %}
+    <div class="blog-post">
+      <h2 class="blog-post-title"><a href="/posts/{{post.id}}"> {{post.title}} </a></h2>
+      <p class="blog-post-meta"> {{post.post_date}} </p>
+      <article>
+        {{post.post_text[0:150] | safe}}
+      </article>
+    </div>
+  {% endfor %}
+{% endblock %}

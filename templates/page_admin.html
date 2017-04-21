@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>LitBlog - Админка</title>
-  </head>
-  <body>
+{% extends 'layout_template.html' %}
+{% block title %} Логин {% endblock %}
+{% block body %}
     <form action="/add_post" method="post">
       <label for="post_title"></label>
       <input type="text" size="150" name="post_title"/>
       <label for="post_text"></label>
-      <textarea name="post_text"></textarea>
+      <textarea name="post_text" wrap="hard" cols="1000"></textarea>
       <input type="submit"/>
     </form>
-  </body>
-</html>
+{% endblock %}
