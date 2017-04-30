@@ -7,6 +7,19 @@
   <article>
     {{post.post_text | safe}}
   </article>
-  <span class="label label-default">Likes: {{post.likes_number}}</span>
+  <span class="label label-default" id="like-label"><a href="javascript:like();">Likes: {{post.likes_number}}</a></span>
 </div>
+<script>
+function like() {
+  $.post('/like/{{post.id}}', {
+
+  }).done(function(number) {
+    $('like-label').text(number['likes_number'])
+  }).fail(function() {
+    alert("Problem")
+  }
+
+  )
+}
+</script>
 {% endblock %}

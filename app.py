@@ -1,4 +1,4 @@
-from flask import Flask, request, session, redirect, render_template, flash
+from flask import Flask, request, session, redirect, render_template, flash, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from modules.database import Base, Posts, Users
@@ -50,9 +50,15 @@ def login():
             flash("Wrong login, check the credentials")
             return redirect('/login')
 
-@app.route('/test')
-def tests():
-    return render_template("layout.html")
+@app.route('/like/<int:post_id>', methods=['POST'])
+def like(post_id):
+    like_number_temp = session_db.query(Posts).filter(Posts.id == post_id).first().likes_number
+    session_db.query(Posts).filter_by(id = post_id).update({'likes_number' : like_number_temp+1}) #.values(likes_number=like_number_temp+1).where(Posts.id == post_id)
+    session_db.commit()
+
+    return jsonify({
+    'likes_number' : session_db.query(Posts).filter(Posts.id == post_id).first().likes_number
+    })
 
 @app.route('/contacts')
 def contacts():
