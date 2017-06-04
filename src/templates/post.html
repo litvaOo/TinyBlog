@@ -1,0 +1,35 @@
+{% extends 'layout_template.html'%}
+{% block title %} {{post.title}} {% endblock %}
+{% block body %}
+<div class="col-md-12 content-page">
+  <div class="col-md-12 blog-post">
+    <div class="post-title">
+      <h1>{{post.title}}</h1>
+    </div>
+    <div class="post-info">
+        <span>{{post.post_date}}</a></span>
+    </div>
+  <article>
+    {{post.post_text | safe}}
+  </article>
+  <span class="label label-default" id="like-label"><a href="javascript:like();">Likes: {{post.likes_number}}</a></span>
+  {% for comment in comment_list  %}
+    <p>{{comment.text}}</p>
+    <span class="label label-default">Carma: {{comment.carma}}</span>
+  {% endfor %}
+</div>
+</div>
+<script>
+function like() {
+  $.post('/like/{{post.id}}', {
+
+  }).done(function(number) {
+    $('like-label').text(number['likes_number'])
+  }).fail(function() {
+    alert("Problem")
+  }
+
+  )
+}
+</script>
+{% endblock %}
